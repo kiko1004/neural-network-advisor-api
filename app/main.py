@@ -5,6 +5,7 @@ from flask import jsonify, make_response
 from NNT import Predictor
 
 app = Flask(__name__)
+app.config['TESTING'] = True
 @app.route("/")
 def home():
     return '<h1 style="text-align:center;">Neural Network Trading Advisor API</h1>' \
