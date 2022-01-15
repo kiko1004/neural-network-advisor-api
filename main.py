@@ -5,6 +5,8 @@ from flask import jsonify, make_response
 from NNT import Predictor
 
 app = Flask(__name__)
+app.config['TESTING'] = True
+app.testing = True
 
 @app.route("/")
 def home():
