@@ -5,7 +5,7 @@ from flask import jsonify, make_response
 from NNT import Predictor
 
 app = Flask(__name__)
-app.config['TESTING'] = True
+
 @app.route("/")
 def home():
     return '<h1 style="text-align:center;">Neural Network Trading Advisor API</h1>' \
@@ -38,3 +38,6 @@ def analyze(ticker):
     )
     response.headers["Content-Type"] = "application/json"
     return response
+
+if __name__ == "__main__":
+    app.run(debug=True)
