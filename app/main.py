@@ -1,8 +1,7 @@
-from flask import Flask, render_template, make_response
-from flask import current_app, flash, jsonify, make_response, redirect, request, url_for
-from flask import request, redirect
-import pandas as pd
 import yfinance as yf
+from flask import Flask
+from flask import jsonify, make_response
+
 from NNT import Predictor
 
 app = Flask(__name__)
