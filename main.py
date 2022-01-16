@@ -17,36 +17,36 @@ def home():
 
 @app.route("/ticker/<ticker>")
 def analyze(ticker):
-    # try:
-    _ticker = yf.Ticker(ticker)
-    df = _ticker.history(period='1y').reset_index()
-    predictor = Predictor(df = df)
-    binary_prediction, binary_confidence, interval_prediction, interval_confidence = predictor.predict_next_week()
-    info = _ticker.info['shortName']
-    suggestion = "Should probably wait for a better setup or change the ticker."
-    if (binary_prediction == 1) & (interval_prediction in ['1% - 2%', '2% - 3%', '3%+']):
-        suggestion = "Probably a good buy. Look at the confidence of our advisors."
+    try:
+        _ticker = yf.Ticker(ticker)
+        df = _ticker.history(period='1y').reset_index()
+        predictor = Predictor(df = df)
+        binary_prediction, binary_confidence, interval_prediction, interval_confidence = predictor.predict_next_week()
+        info = _ticker.info['shortName']
+        suggestion = "Should probably wait for a better setup or change the ticker."
+        if (binary_prediction == 1) & (interval_prediction in ['1% - 2%', '2% - 3%', '3%+']):
+            suggestion = "Probably a good buy. Look at the confidence of our advisors."
 
 
-    response = make_response(
-        jsonify(
-            {"Asset_Name": info,
-             "Neural_Network_1": str(binary_prediction),
-             "Neural_Network_1_confidence": str(binary_confidence),
-             "Neural_Network_2": str(interval_prediction),
-             "Neural_Network_2_confidence": str(interval_confidence),
-             "Strategy_Suggestion": suggestion}
-        ),
-        200,
-    )
-    # except:
-    #     response = make_response(
-    #         jsonify(
-    #             {"Sorry I am a teapot.": "1",
-    #              "Also wrong ticker": "2"}
-    #         ),
-    #         418,
-    #     )
+        response = make_response(
+            jsonify(
+                {"Asset_Name": info,
+                 "Neural_Network_1": str(binary_prediction),
+                 "Neural_Network_1_confidence": str(binary_confidence),
+                 "Neural_Network_2": str(interval_prediction),
+                 "Neural_Network_2_confidence": str(interval_confidence),
+                 "Strategy_Suggestion": suggestion}
+            ),
+            200,
+        )
+    except:
+        response = make_response(
+            jsonify(
+                {"Sorry I am a teapot.": "1",
+                 "Also wrong ticker": "2"}
+            ),
+            418,
+        )
     response.headers["Content-Type"] = "application/json"
     return response
 
