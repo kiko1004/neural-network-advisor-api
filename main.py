@@ -48,6 +48,7 @@ def analyze(ticker):
             418,
         )
     response.headers["Content-Type"] = "application/json"
+    response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
 if __name__ == "__main__":
